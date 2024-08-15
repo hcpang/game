@@ -5,14 +5,15 @@ import java.util.Stack;
 
 import cb.alphabeta.Move;
 import cb.alphabeta.Position;
+import mancala.evaluation.MancalaEvaluation;
 
 public class MancalaGame implements Position {
 
 	private final Stack<MancalaGameState> states;
 	private MancalaGameState currentState;
-	private final AbstractMancalaEvaluation eval;
+	private final MancalaEvaluation eval;
 	
-	public MancalaGame(MancalaGameState initialState, AbstractMancalaEvaluation eval) {
+	public MancalaGame(MancalaGameState initialState, MancalaEvaluation eval) {
 		this.states = new Stack<MancalaGameState>();
 		this.currentState = initialState;
 		this.eval = eval;

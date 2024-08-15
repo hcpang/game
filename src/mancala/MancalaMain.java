@@ -7,6 +7,8 @@ import java.util.List;
 
 import cb.alphabeta.AlphaBeta;
 import cb.alphabeta.Move;
+import mancala.evaluation.MancalaEvaluation;
+import mancala.evaluation.SimpleDiffEvaluation;
 
 public class MancalaMain {
 
@@ -19,7 +21,7 @@ public class MancalaMain {
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 
-		AbstractMancalaEvaluation eval = new SimpleDiffEvaluation();
+		MancalaEvaluation eval = new SimpleDiffEvaluation();
 
 		while(true) {
 

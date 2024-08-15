@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import cb.alphabeta.Move;
+import mancala.evaluation.MancalaEvaluation;
 
 
 public class MancalaGameState {
@@ -115,7 +116,7 @@ public class MancalaGameState {
 		}
 	}
 
-	public int evaluate(AbstractMancalaEvaluation eval) {
+	public int evaluate(MancalaEvaluation eval) {
 
 		if (this.availableMoves.isEmpty()) {
 
