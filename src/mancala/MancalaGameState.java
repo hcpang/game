@@ -149,6 +149,23 @@ public class MancalaGameState {
 
 
 	}
+	
+	public boolean isTerminalState() {
+		return (board[8] == 0 && 
+				board[9] == 0 && board[10] == 0 &&
+				board[11] == 0 && board[12] == 0 && board[13] == 0) ||
+				(board[1] == 0 && 
+				board[2] == 0 && board[3] == 0 &&
+				board[4] == 0 && board[5] == 0 && board[6] == 0);
+	}
+	
+	public int getBottomScore() {
+		return board[1] + board[2] + board[3] + board[4] + board[5] + board[6] + board[7];
+	}
+	
+	public int getTopScore() {
+		return board[8] + board[9] + board[10] + board[11] + board[12] + board[13] + board[0];
+	}
 
 	public boolean currentlyMaximizing() {
 		return this.isMaximizerTurn;
