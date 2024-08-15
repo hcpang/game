@@ -9,6 +9,7 @@ import cb.alphabeta.AlphaBeta;
 import cb.alphabeta.Move;
 import mancala.evaluation.MancalaEvaluation;
 import mancala.evaluation.SimpleDiffEvaluation;
+import mancala.evaluation.TotalMarblesEvaluation;
 
 public class MancalaMain {
 
@@ -21,7 +22,7 @@ public class MancalaMain {
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 
-		MancalaEvaluation eval = new SimpleDiffEvaluation();
+		MancalaEvaluation eval = new TotalMarblesEvaluation();
 
 		while(true) {
 
