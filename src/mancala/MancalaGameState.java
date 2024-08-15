@@ -155,7 +155,7 @@ public class MancalaGameState {
 	}
 
 	public String getCurrentPlayer() {
-		return currentlyMaximizing() ? "Human" : "Computer";
+		return currentlyMaximizing() ? "Bottom" : "Top";
 	}
 
 	private String printCell(short cell) {

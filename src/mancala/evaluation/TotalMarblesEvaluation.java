@@ -13,7 +13,7 @@ public class TotalMarblesEvaluation extends AbstractMancalaEvaluation {
 			sum += board[i];
 		}
 		
-		return sum + 3 * board[7];
+		return 2 * sum +  board[7];
 	}
 
 
