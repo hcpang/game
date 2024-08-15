@@ -8,7 +8,7 @@ public class SimpleDiffEvaluation extends AbstractMancalaEvaluation {
 	protected int evaluateBoardNonTerminalState(MancalaGameState state) {
 		short[] board = state.getBoard();
 		
-		return board[0] - board[7];
+		return board[7] - board[0];
 	}
 
 

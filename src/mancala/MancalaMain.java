@@ -38,15 +38,27 @@ public class MancalaMain {
 				int depth = 15;
 				if (humanPlayFirst == state.currentlyMaximizing()) {
 					List<Move> moves = state.getMoves();
-					System.out.print("Available moves are " );
-					for (Move m : moves) {
-						System.out.print( ((MancalaMove)m).getPosition() + " ");
-					}
-					System.out.print(". Please enter your move: ");
 
-					String moveInString = br.readLine();
-					short movePosition = Short.parseShort(moveInString);
-					bestMove = MancalaMove.getMove(movePosition);
+					while (true) {
+						System.out.print("Available moves are " );
+						for (Move m : moves) {
+							System.out.print( ((MancalaMove)m).getPosition() + " ");
+						}
+
+
+						System.out.print(". Please enter your move: ");
+
+						String moveInString = br.readLine();
+						int movePosition = Integer.parseInt(moveInString);
+
+						if (state.isValidMove(movePosition)) {
+
+							bestMove = MancalaMove.getMove(movePosition);
+							break;
+						} else {
+							System.out.println("Invalid move. Please try again.");
+						}
+					}
 				} else {
 					bestMove = (MancalaMove) ab.analyzeDepth(depth);
 				}

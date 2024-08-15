@@ -47,6 +47,15 @@ public class MancalaGameState {
 	public List<Move> getMoves() {
 		return this.availableMoves;	
 	}
+	
+	public boolean isValidMove(int move) {
+		for (Move m : availableMoves) {
+			if (((MancalaMove)m ).getPosition() == move) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	private List<Move> getMovesHelper() {
 		if (isSkipTurn) {
