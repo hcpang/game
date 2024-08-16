@@ -35,6 +35,16 @@ public class EvansEvaluation extends AbstractMancalaEvaluation {
 		return sum;
 	}
 	
+	public int calculateNumVulnurableMarbles(short[] board) {
+		int numofVulnurableMarbles = 0; 
+		for (int i = 12; i >= 8; i--) {
+			if (board[MancalaMove.OPPOSITE_LOOKUP[i]] == 0) {
+				numofVulnurableMarbles += board[i];
+			}
+		}
+		return numofVulnurableMarbles; 
+	}
+	
 	@Override
 	protected int evaluateBoardNonTerminalState(MancalaGameState state) {
 		short[] board = state.getBoard();

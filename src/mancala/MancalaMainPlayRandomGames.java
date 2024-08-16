@@ -40,9 +40,10 @@ public class MancalaMainPlayRandomGames extends MancalaMain {
 				int topScore = new MancalaMainPlayRandomGames().playGame(state);
 
 				EvansEvaluation eval = new EvansEvaluation(3);
-				int numBottomMarbles = eval.calculateNumBottomMarbles(board);
-
-				myWriter.write(numBottomMarbles + "," + bottomTurn + "," + topScore + "\n");
+//				int numBottomMarbles = eval.calculateNumBottomMarbles(board);
+				int numVulnurableMarbles = eval.calculateNumVulnurableMarbles(board);
+				
+				myWriter.write(numVulnurableMarbles + "," + bottomTurn + "," + topScore + "\n");
 
 
 			}
