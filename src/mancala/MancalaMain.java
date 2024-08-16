@@ -7,6 +7,7 @@ import java.util.List;
 
 import cb.alphabeta.AlphaBeta;
 import cb.alphabeta.Move;
+import mancala.evaluation.EvansEvaluation;
 import mancala.evaluation.MancalaEvaluation;
 import mancala.evaluation.TotalMarblesEvaluation;
 
@@ -20,8 +21,11 @@ public class MancalaMain {
 	}
 
 	public void playGame() {
-		MancalaGameState state = new MancalaGameState(true, false, new short[] {0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4});
-
+		playGame(new MancalaGameState(true, false, new short[] {0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4}));
+	}
+	
+	public int playGame(MancalaGameState state) {
+		
 		while(true) {
 
 
@@ -47,19 +51,17 @@ public class MancalaMain {
 			state = state.makeMove(bestMove);
 		}
 		
-		if (state.isTerminalState()) {
+		int topScore = state.getTopScore();
+		int bottomScore = state.getBottomScore();
 			
-			int topScore = state.getTopScore();
-			int bottomScore = state.getBottomScore();
+		System.out.println("Top score: " + topScore + " Bottom score: " + bottomScore);
 			
-			System.out.println("Top score: " + topScore + " Bottom score: " + bottomScore);
-			
-		}
+		return topScore;
 		
 	}
 
 	protected MancalaMove getMoveForTop(MancalaGameState state) {
-		return getMachineMove(state, new TotalMarblesEvaluation(), 15);
+		return getMachineMove(state, new EvansEvaluation(3), 15);
 	}
 
 	protected MancalaMove getMoveForBottom(MancalaGameState state) {
