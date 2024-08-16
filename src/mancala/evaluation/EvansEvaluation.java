@@ -27,6 +27,7 @@ public class EvansEvaluation extends AbstractMancalaEvaluation {
 		return numofTakableMarbles;
 	}
 	
+
 	public int calculateNumBottomMarbles(short[] board) {
 		int sum = 0;
 		for (int i = 1; i <= 6; i++) {
@@ -34,6 +35,15 @@ public class EvansEvaluation extends AbstractMancalaEvaluation {
 		}
 		return sum;
 	}
+	
+	public int calculateNumTopMarbles(short[] board) {
+		int sum = 0;
+		for (int i = 8; i <= 13; i++) {
+			sum += board[i];
+		}
+		return sum;
+	}
+	
 	
 	public int calculateNumVulnurableMarbles(short[] board) {
 		int numofVulnurableMarbles = 0; 
