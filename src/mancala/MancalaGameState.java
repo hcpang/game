@@ -5,10 +5,10 @@ import java.util.Collections;
 import java.util.List;
 
 import cb.alphabeta.Move;
-import mancala.evaluation.MancalaEvaluation;
+import common.GameState;
 
 
-public class MancalaGameState {
+public class MancalaGameState implements GameState {
 	private final boolean isMaximizerTurn;
 	private final boolean isSkipTurn;
 	private final short board[]; // array of size 14
@@ -89,7 +89,11 @@ public class MancalaGameState {
 		return this.isSkipTurn;
 	}
 
-	public MancalaGameState makeMove(MancalaMove move) {
+	@Override
+	public GameState makeMove(Move m) {
+		
+		MancalaMove move = (MancalaMove) m;
+		
 		if (isSkipTurn) {
 			return new MancalaGameState(!isMaximizerTurn, false, board.clone());
 		} else {
@@ -125,30 +129,7 @@ public class MancalaGameState {
 		}
 	}
 
-	public int evaluate(MancalaEvaluation eval) {
-
-		if (this.availableMoves.isEmpty()) {
-
-			int score = -board[0];
-
-			for (int i = 1; i <= 7; i++) {
-				score += board[i];
-			}
-			for (int i = 8; i <= 13; i++) {
-				score -= board[i];
-			}	
-
-			return score;
-		} else {
-
-
-
-			return eval.evaluate(this);
-
-		}
-
-
-	}
+	
 	
 	public boolean isTerminalState() {
 		return (board[8] == 0 && 
@@ -209,6 +190,7 @@ public class MancalaGameState {
 	public void print() {
 		System.out.println("Current turn = " + getCurrentPlayer() + "; Skip Turn = " + isSkipTurn );
 		System.out.println(boardToString(board));
-	}				
+	}
 
+	
 }

@@ -1,25 +1,24 @@
-package mancala;
+package common;
 
 import java.util.List;
 import java.util.Stack;
 
 import cb.alphabeta.Move;
 import cb.alphabeta.Position;
-import mancala.evaluation.MancalaEvaluation;
 
-public class MancalaGame implements Position {
+public class Game<T extends GameState> implements Position {
 
-	private final Stack<MancalaGameState> states;
-	private MancalaGameState currentState;
-	private final MancalaEvaluation eval;
-	
-	public MancalaGame(MancalaGameState initialState, MancalaEvaluation eval) {
-		this.states = new Stack<MancalaGameState>();
+	private final Stack<T> states;
+	private T currentState;
+	private final Evaluation<T> eval;
+
+	public Game(T initialState, Evaluation<T> eval) {
+		this.states = new Stack<>();
 		this.currentState = initialState;
 		this.eval = eval;
 	}
-	
-	
+
+
 	@Override
 	public List<Move> getMoves() {
 		return currentState.getMoves();
@@ -27,7 +26,8 @@ public class MancalaGame implements Position {
 
 	@Override
 	public void doMove(Move move) {
-		MancalaGameState nextState = currentState.makeMove((MancalaMove)move);
+		@SuppressWarnings("unchecked")
+		T nextState = (T) currentState.makeMove(move);
 		states.push(currentState);
 		currentState = nextState;
 	}
@@ -39,7 +39,7 @@ public class MancalaGame implements Position {
 
 	@Override
 	public int evaluate() {
-		return currentState.evaluate(this.eval);
+		return eval.evaluate(currentState);
 	}
 
 	@Override

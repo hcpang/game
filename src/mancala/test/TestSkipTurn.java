@@ -27,9 +27,9 @@ class TestSkipTurn {
 	
 	@Test
 	void test() {
-		MancalaGameState newState = gameState.makeMove(MancalaMove.ALL_MOVES[3]);
+		MancalaGameState newState = (MancalaGameState) gameState.makeMove(MancalaMove.ALL_MOVES[3]);
 		newState.print();
-		newState = gameStateMinimizer.makeMove(MancalaMove.ALL_MOVES[10]);
+		newState = (MancalaGameState) gameStateMinimizer.makeMove(MancalaMove.ALL_MOVES[10]);
 		newState.print();
 	}
 

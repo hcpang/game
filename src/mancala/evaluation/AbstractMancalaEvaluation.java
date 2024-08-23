@@ -1,8 +1,9 @@
 package mancala.evaluation;
 
+import common.Evaluation;
 import mancala.MancalaGameState;
 
-public abstract class AbstractMancalaEvaluation implements MancalaEvaluation {
+public abstract class AbstractMancalaEvaluation implements Evaluation<MancalaGameState> {
 
 	protected abstract int evaluateBoardNonTerminalState(MancalaGameState state);
 	

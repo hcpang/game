@@ -7,8 +7,10 @@ import java.util.List;
 
 import cb.alphabeta.AlphaBeta;
 import cb.alphabeta.Move;
+import common.Evaluation;
+import common.Game;
+import mancala.evaluation.DaddysEvaluation;
 import mancala.evaluation.EvansEvaluation;
-import mancala.evaluation.MancalaEvaluation;
 import mancala.evaluation.TotalMarblesEvaluation;
 
 public class MancalaMain {
@@ -48,7 +50,7 @@ public class MancalaMain {
 
 
 			System.out.println(state.getCurrentPlayer() +  " making move for: " + bestMove.getPosition());
-			state = state.makeMove(bestMove);
+			state = (MancalaGameState) state.makeMove(bestMove);
 		}
 		
 		int topScore = state.getTopScore();
@@ -61,7 +63,7 @@ public class MancalaMain {
 	}
 
 	protected MancalaMove getMoveForTop(MancalaGameState state) {
-		return getMachineMove(state, new EvansEvaluation(3), 15);
+		return getMachineMove(state, new DaddysEvaluation(), 15);
 	}
 
 	protected MancalaMove getMoveForBottom(MancalaGameState state) {
@@ -101,8 +103,8 @@ public class MancalaMain {
 	}
 
 	protected MancalaMove getMachineMove(MancalaGameState state,
-			MancalaEvaluation eval, int depth) {
-		AlphaBeta ab = new AlphaBeta(new MancalaGame(state, eval));
+			Evaluation<MancalaGameState> eval, int depth) {
+		AlphaBeta ab = new AlphaBeta(new Game<MancalaGameState>(state, eval));
 		return (MancalaMove) ab.analyzeDepth(depth);
 	}
 

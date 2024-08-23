@@ -29,21 +29,23 @@ public class MancalaMainPlayRandomGames extends MancalaMain {
 
 	public static void main(String[] args) {
 		int numGames = 500;
-
+		
+		int numMarblesLeft = 15;
 		try {
 			FileWriter myWriter = new FileWriter("C:\\Users\\yharm\\git\\game\\output\\filename.txt");
 			for (int i = 0; i < numGames; i++) {
-				GenerateRandomBoard g = new GenerateRandomBoard(10);
+				GenerateRandomBoard g = new GenerateRandomBoard(numMarblesLeft);
 				short[] board = g.generateRandomBoard();
 				boolean bottomTurn = (i % 2 == 0);
 				MancalaGameState state = new MancalaGameState(bottomTurn, false, board);
 				int topScore = new MancalaMainPlayRandomGames().playGame(state);
 
 				EvansEvaluation eval = new EvansEvaluation(3);
-//				int numBottomMarbles = eval.calculateNumBottomMarbles(board);
-				int numVulnurableMarbles = eval.calculateNumVulnurableMarbles(board);
-				
-				myWriter.write(numVulnurableMarbles + "," + bottomTurn + "," + topScore + "\n");
+				int numBottomMarbles = eval.calculateNumBottomMarbles(board);
+				int numTopMarbles = eval.calculateNumTopMarbles(board);
+				int numMarblesDiff = numTopMarbles - numBottomMarbles;
+				int scoreDiff = 2 * topScore - numMarblesLeft;
+				myWriter.write(numMarblesDiff + "," + bottomTurn + "," +  scoreDiff + "\n");
 
 
 			}

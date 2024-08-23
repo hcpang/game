@@ -38,8 +38,8 @@ class TestMakeMove {
 
 	@Test
 	void test() {
-		gameState.makeMove(MancalaMove.ALL_MOVES[1]).print();
-		gameStateMinimizer.makeMove(MancalaMove.ALL_MOVES[8]).print();
+		((MancalaGameState) gameState.makeMove(MancalaMove.ALL_MOVES[1])).print();
+		((MancalaGameState) gameStateMinimizer.makeMove(MancalaMove.ALL_MOVES[8])).print();
 	}
 
 }
