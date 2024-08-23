@@ -22,7 +22,14 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 		// TODO - include the 5 other configs
 	};
 	
-	public static boolean hasWinner(BitSet[] pieces) {
+	public static boolean hasWinner(BitSet pieces) {
+		for (BitSet winningConfig : WINNING_CONFIGURATIONS) {
+			BitSet clone = pieces.get(0, pieces.length());
+			clone.and(winningConfig);
+			if (clone.equals(winningConfig)) {
+				return true;
+			}
+		}
 		return false;
 	}
 	
