@@ -79,7 +79,12 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 	}
 	
 	public String toString() {
-		return null; // TODO by alex: return a string representation of this state
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("-----------------------------------------\n" );
+		
+
+		return sb.toString();
 	}
 
 }
