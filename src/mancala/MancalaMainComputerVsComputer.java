@@ -11,12 +11,12 @@ public class MancalaMainComputerVsComputer extends MancalaMain {
 
 	@Override
 	protected MancalaMove getMoveForTop(MancalaGameState state) {
-		return getMachineMove(state, new EvansEvaluation(3), 15);
+		return getMachineMove(state, new SimpleDiffEvaluation(), 15);
 	}
 
 	@Override
 	protected MancalaMove getMoveForBottom(MancalaGameState state) {
-		return getMachineMove(state, new DaddysEvaluation(), 15);
+		return getMachineMove(state, new SimpleDiffEvaluation(), 15);
 	}
 
 

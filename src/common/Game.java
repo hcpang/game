@@ -6,7 +6,7 @@ import java.util.Stack;
 import cb.alphabeta.Move;
 import cb.alphabeta.Position;
 
-public class Game<T extends GameState> implements Position {
+public class Game<T extends GameState<M>, M extends Move> implements Position {
 
 	private final Stack<T> states;
 	private T currentState;
@@ -19,15 +19,16 @@ public class Game<T extends GameState> implements Position {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Move> getMoves() {
-		return currentState.getMoves();
+		return (List<Move>) currentState.getMoves();
 	}
 
 	@Override
 	public void doMove(Move move) {
 		@SuppressWarnings("unchecked")
-		T nextState = (T) currentState.makeMove(move);
+		T nextState = (T) currentState.makeMove((M)move);
 		states.push(currentState);
 		currentState = nextState;
 	}

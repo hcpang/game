@@ -3,10 +3,9 @@ package ultimatetictactoe;
 import java.util.BitSet;
 import java.util.List;
 
-import cb.alphabeta.Move;
 import common.GameState;
 
-public class UltimateTicTacToeGameState implements GameState {
+public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMove> {
 	
 	private final BitSet[] circlePieces;
 	private final BitSet[] crossPieces;
@@ -56,13 +55,13 @@ public class UltimateTicTacToeGameState implements GameState {
 	}
 
 	@Override
-	public List<Move> getMoves() {
+	public List<UltimateTicTacToeMove> getMoves() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public GameState makeMove(Move move) {
+	public GameState<UltimateTicTacToeMove> makeMove(UltimateTicTacToeMove move) {
 		// TODO Auto-generated method stub
 		return null;
 	}

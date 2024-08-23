@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import cb.alphabeta.AlphaBeta;
-import cb.alphabeta.Move;
 import common.Evaluation;
 import common.Game;
 import mancala.evaluation.DaddysEvaluation;
@@ -79,12 +78,12 @@ public class MancalaMain {
 
 	protected MancalaMove getHumanMove(MancalaGameState state)
 			throws IOException {
-		List<Move> moves = state.getMoves();
+		List<MancalaMove> moves = state.getMoves();
 
 		while (true) {
 			System.out.print("Available moves are " );
-			for (Move m : moves) {
-				System.out.print( ((MancalaMove)m).getPosition() + " ");
+			for (MancalaMove m : moves) {
+				System.out.print( m.getPosition() + " ");
 			}
 
 
@@ -104,7 +103,7 @@ public class MancalaMain {
 
 	protected MancalaMove getMachineMove(MancalaGameState state,
 			Evaluation<MancalaGameState> eval, int depth) {
-		AlphaBeta ab = new AlphaBeta(new Game<MancalaGameState>(state, eval));
+		AlphaBeta ab = new AlphaBeta(new Game<MancalaGameState, MancalaMove>(state, eval));
 		return (MancalaMove) ab.analyzeDepth(depth);
 	}
 

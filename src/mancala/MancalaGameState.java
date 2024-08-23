@@ -8,11 +8,11 @@ import cb.alphabeta.Move;
 import common.GameState;
 
 
-public class MancalaGameState implements GameState {
+public class MancalaGameState implements GameState<MancalaMove> {
 	private final boolean isMaximizerTurn;
 	private final boolean isSkipTurn;
 	private final short board[]; // array of size 14
-	private final List<Move> availableMoves;
+	private final List<MancalaMove> availableMoves;
 
 	// generate initial board
 	public MancalaGameState() {
@@ -44,7 +44,7 @@ public class MancalaGameState implements GameState {
 		return this.board;
 	}
 
-	public List<Move> getMoves() {
+	public List<MancalaMove> getMoves() {
 		return this.availableMoves;	
 	}
 	
@@ -57,11 +57,11 @@ public class MancalaGameState implements GameState {
 		return false;
 	}
 
-	private List<Move> getMovesHelper() {
+	private List<MancalaMove> getMovesHelper() {
 		if (isSkipTurn) {
 			return Collections.singletonList(MancalaMove.SKIP_TURN_MOVE);
 		} else {
-			List<Move> moves = new ArrayList<Move>(6);
+			List<MancalaMove> moves = new ArrayList<MancalaMove>(6);
 			boolean isOtherPlayerDone = true;
 
 			int myStartIndex = isMaximizerTurn ? 1 : 8;
@@ -90,9 +90,8 @@ public class MancalaGameState implements GameState {
 	}
 
 	@Override
-	public GameState makeMove(Move m) {
+	public GameState<MancalaMove> makeMove(MancalaMove move) {
 		
-		MancalaMove move = (MancalaMove) m;
 		
 		if (isSkipTurn) {
 			return new MancalaGameState(!isMaximizerTurn, false, board.clone());
