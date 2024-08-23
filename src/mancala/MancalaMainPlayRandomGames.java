@@ -29,23 +29,24 @@ public class MancalaMainPlayRandomGames extends MancalaMain {
 
 	public static void main(String[] args) {
 		int numGames = 500;
-		
-		int numMarblesLeft = 15;
+
 		try {
 			FileWriter myWriter = new FileWriter("C:\\Users\\yharm\\git\\game\\output\\filename.txt");
 			for (int i = 0; i < numGames; i++) {
-				GenerateRandomBoard g = new GenerateRandomBoard(numMarblesLeft);
+				GenerateRandomBoard g = new GenerateRandomBoard(15);
 				short[] board = g.generateRandomBoard();
 				boolean bottomTurn = (i % 2 == 0);
 				MancalaGameState state = new MancalaGameState(bottomTurn, false, board);
 				int topScore = new MancalaMainPlayRandomGames().playGame(state);
 
 				EvansEvaluation eval = new EvansEvaluation(3);
-				int numBottomMarbles = eval.calculateNumBottomMarbles(board);
-				int numTopMarbles = eval.calculateNumTopMarbles(board);
-				int numMarblesDiff = numTopMarbles - numBottomMarbles;
-				int scoreDiff = 2 * topScore - numMarblesLeft;
-				myWriter.write(numMarblesDiff + "," + bottomTurn + "," +  scoreDiff + "\n");
+				
+				int marbleDiff = eval.calculateMarbleDiff(board);
+				int numVulnurableMarbles = eval.calculateNumCapturableByBottom(board);
+				int numEmptyPocketsDiff = eval.calculateEmptyPocketsTop(board) - eval.calculateEmptyPocketsBottom(board);
+				int h4 = eval.calculateH4(bottomTurn, board);
+				
+				myWriter.write(marbleDiff + "," + h4 + "," + numEmptyPocketsDiff + "," + bottomTurn + "," + topScore + "\n");
 
 
 			}

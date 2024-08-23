@@ -10,9 +10,24 @@ plot_correlation = function(x, y, xlabel, ylabel, title='') {
 
 data = fread("C:\\Users\\yharm\\git\\game\\output\\filename.txt")
 
+marbleDiff = data$V1
+h4 = data$V2
+emptyPocketsDiff = data$V3
 
-ggplot(data, aes(x=data$V1, y=data$V3) ) +
-		     geom_bin2d() +
-		     theme_bw()
-			 
-plot_correlation(data$V1, data$V3, 'feature', 'top score')		 
+topScore = data$V5
+
+ggplot(data, aes(x=marbleDiff, y=topScore) ) +
+		geom_bin2d() +
+		theme_bw()
+
+ggplot(data, aes(x=h4, y=topScore) ) +
+		geom_bin2d() +
+		theme_bw()
+
+ggplot(data, aes(x=emptyPocketsDiff, y=topScore) ) +
+		geom_bin2d() +
+		theme_bw()
+
+ggplot(data, aes(x=marbleDiff, y=emptyPocketsDiff) ) +
+		geom_bin2d() +
+		theme_bw()

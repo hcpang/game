@@ -22,9 +22,9 @@ public class EvansEvaluation2 extends EvansEvaluation {
 		short[] board = state.getBoard();
 
 		int sum = calculateNumBottomMarbles(board);
-		int numofTakableMarbles = calculateNumTakeableMarbles(board);
-		int numofVulnurableMarbles = calculateNumVulnurableMarbles(board);
-		int numofEmptyPockets = calculateEmptyPockets(board);
+		int numofTakableMarbles = calculateNumCapturableByTop(board);
+		int numofVulnurableMarbles = calculateNumCapturableByBottom(board);
+		int numofEmptyPockets = calculateEmptyPocketsTop(board);
 		int totalMarblesNotInMancala = CalculateTotal(board);
 
 		//		return weight * sum + board[7]  - 2 * numofEmptyPockets;
