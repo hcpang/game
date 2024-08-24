@@ -1,5 +1,7 @@
 package ultimatetictactoe;
 
+import java.util.Objects;
+
 import cb.alphabeta.Move;
 
 public class UltimateTicTacToeMove implements Move {
@@ -24,5 +26,24 @@ public class UltimateTicTacToeMove implements Move {
 	public String toString() {
 		return "(" + boardIndex + "," + positionOnBoard + ")";
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(boardIndex, positionOnBoard);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UltimateTicTacToeMove other = (UltimateTicTacToeMove) obj;
+		return boardIndex == other.boardIndex && positionOnBoard == other.positionOnBoard;
+	}
+	
+	
 	
 }

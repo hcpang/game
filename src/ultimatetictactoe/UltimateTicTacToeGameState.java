@@ -13,6 +13,12 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 	private final int boardIndexForCurrentMove;
 	private final boolean isCirclesTurn;
 
+	public int getBoardIndexForCurrentMove() {
+		return boardIndexForCurrentMove;
+	}
+
+
+
 	private final BitSet boardsCapturedByCircle;
 	private final BitSet boardsCapturedByCross;
 
@@ -90,7 +96,7 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 	public List<UltimateTicTacToeMove> getMoves() {
 		// TODO Auto-generated method stub
 		List<UltimateTicTacToeMove> moves = new ArrayList<>(9);
-		if (!hasCircleWon() && !hasCircleWon()) {
+		if (!hasCircleWon() && !hasCrossWon()) {
 			for (int i = 0; i<=8; i++) {
 				if (!circlePieces[boardIndexForCurrentMove].get(i) && 
 						!crossPieces[boardIndexForCurrentMove].get(i)) {
@@ -141,6 +147,18 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 	@Override
 	public boolean currentlyMaximizing() {
 		return isCirclesTurn;
+	}
+	
+	public boolean isCirclesTurn() {
+		return isCirclesTurn;
+	}
+	
+	public String getCurrentPlayer() {
+		return isCirclesTurn ? "o" : "x";
+	}
+	
+	public boolean isValidMove(UltimateTicTacToeMove move) {
+		return getMoves().contains(move);
 	}
 	
 	private static char printPiece(BitSet circlePieces, BitSet crossPieces, int pos) {
