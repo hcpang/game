@@ -36,14 +36,14 @@ class TestBitSetUtils {
 		BitSet myBoard = UltimateTicTacToeGameState.initializeBitSet(new boolean[] {true, false, true, false, true, false, false, true, false});
 		BitSet opponentBoard = UltimateTicTacToeGameState.initializeBitSet(new boolean[] {false, false, false, false, false, false, false, false, false});
 
-		Assert.assertEquals(3, BitSetUtils.getNumPotentialCaptureMoves(myBoard, opponentBoard));
+		Assert.assertEquals(3, BitSetUtils.getPotentialCaptureMoves(myBoard, opponentBoard).cardinality());
 		
 		opponentBoard = UltimateTicTacToeGameState.initializeBitSet(new boolean[] {false, true, false, true, false, false, false, false, false});
-		Assert.assertEquals(2, BitSetUtils.getNumPotentialCaptureMoves(myBoard, opponentBoard));
+		Assert.assertEquals(2, BitSetUtils.getPotentialCaptureMoves(myBoard, opponentBoard).cardinality());
 		opponentBoard = UltimateTicTacToeGameState.initializeBitSet(new boolean[] {false, true, false, true, false, false, true, false, false});
-		Assert.assertEquals(1, BitSetUtils.getNumPotentialCaptureMoves(myBoard, opponentBoard));
+		Assert.assertEquals(1, BitSetUtils.getPotentialCaptureMoves(myBoard, opponentBoard).cardinality());
 		opponentBoard = UltimateTicTacToeGameState.initializeBitSet(new boolean[] {false, true, false, true, false, false, true, false, true});
-		Assert.assertEquals(0, BitSetUtils.getNumPotentialCaptureMoves(myBoard, opponentBoard));
+		Assert.assertEquals(0, BitSetUtils.getPotentialCaptureMoves(myBoard, opponentBoard).cardinality());
 		
 
 	}

@@ -6,7 +6,7 @@ import ultimatetictactoe.UltimateTicTacToeGameState;
 
 public class BitSetUtils {
 
-	public static int getNumPotentialCaptureMoves(BitSet myBoard, BitSet opponentBoard) {
+	public static BitSet getPotentialCaptureMoves(BitSet myBoard, BitSet opponentBoard) {
 		
 		BitSet result = new BitSet(9);
 		BitSet flipBoard = myBoard.get(0, 9);
@@ -23,7 +23,7 @@ public class BitSetUtils {
 		
 		// now remove all positions occupied by opponent
 		result.andNot(opponentBoard);
-		return result.cardinality();
+		return result;
 	}
 	
 }

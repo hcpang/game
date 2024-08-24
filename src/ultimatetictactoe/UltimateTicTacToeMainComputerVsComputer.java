@@ -14,14 +14,14 @@ public class UltimateTicTacToeMainComputerVsComputer extends UltimateTicTacToeMa
 	protected UltimateTicTacToeMove getMoveForCircle(UltimateTicTacToeGameState state) {
 
 		return getMachineMove(state,
-				new DaddysUltimateTicTacToeEvaluationV2()
+				new SimpleUltimateTicTacToeEvaluation()
 				, 10);
 	}
 
 	@Override
 	protected UltimateTicTacToeMove getMoveForCross(UltimateTicTacToeGameState state) {
 		return getMachineMove(state,
-				new SimpleUltimateTicTacToeEvaluation()
+				new DaddysUltimateTicTacToeEvaluationV2()
 				, 10);
 	}
 

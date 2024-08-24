@@ -20,8 +20,8 @@ public class DaddysUltimateTicTacToeEvaluation extends AbstractUltimateTicTacToe
 			} else if (state.getBoardsCapturedByCross().get(i)) {
 				crossScore += captureScore;
 			} else {
-				int circlePieces = BitSetUtils.getNumPotentialCaptureMoves(state.getCirclePieces()[i], state.getCrossPieces()[i]);
-				int crossPieces = BitSetUtils.getNumPotentialCaptureMoves(state.getCrossPieces()[i], state.getCirclePieces()[i]);
+				int circlePieces = BitSetUtils.getPotentialCaptureMoves(state.getCirclePieces()[i], state.getCrossPieces()[i]).cardinality();
+				int crossPieces = BitSetUtils.getPotentialCaptureMoves(state.getCrossPieces()[i], state.getCirclePieces()[i]).cardinality();
 				if (circlePieces > crossPieces) {
 					circleScore+=advantageScore;
 				} else if (crossPieces > circlePieces) {

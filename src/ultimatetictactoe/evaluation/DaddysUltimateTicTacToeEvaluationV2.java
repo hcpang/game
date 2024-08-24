@@ -16,8 +16,8 @@ public class DaddysUltimateTicTacToeEvaluationV2 extends AbstractUltimateTicTacT
 		for (int i = 0; i<=8; i++) {
 			if (!state.getBoardsCapturedByCircle().get(i) && 
 					!state.getBoardsCapturedByCross().get(i)) {
-				int circlePieces = BitSetUtils.getNumPotentialCaptureMoves(state.getCirclePieces()[i], state.getCrossPieces()[i]);
-				int crossPieces = BitSetUtils.getNumPotentialCaptureMoves(state.getCrossPieces()[i], state.getCirclePieces()[i]);
+				int circlePieces = BitSetUtils.getPotentialCaptureMoves(state.getCirclePieces()[i], state.getCrossPieces()[i]).cardinality();
+				int crossPieces = BitSetUtils.getPotentialCaptureMoves(state.getCrossPieces()[i], state.getCirclePieces()[i]).cardinality();
 				if (circlePieces > crossPieces) {
 					circleScore+=1;
 				} else if (crossPieces > circlePieces) {
@@ -27,8 +27,8 @@ public class DaddysUltimateTicTacToeEvaluationV2 extends AbstractUltimateTicTacT
 		}
 		int advantageScore = circleScore - crossScore;
 		
-		int circleBoardAdv = BitSetUtils.getNumPotentialCaptureMoves(state.getBoardsCapturedByCircle(), state.getBoardsCapturedByCross());
-		int crossBoardAdv = BitSetUtils.getNumPotentialCaptureMoves(state.getBoardsCapturedByCross(), state.getBoardsCapturedByCircle());
+		int circleBoardAdv = BitSetUtils.getPotentialCaptureMoves(state.getBoardsCapturedByCircle(), state.getBoardsCapturedByCross()).cardinality();
+		int crossBoardAdv = BitSetUtils.getPotentialCaptureMoves(state.getBoardsCapturedByCross(), state.getBoardsCapturedByCircle()).cardinality();
 		
 		int boardAdvantageScore = circleBoardAdv - crossBoardAdv;
 		
