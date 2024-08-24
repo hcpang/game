@@ -19,7 +19,7 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 		BitSet.valueOf(new byte[] {1, 1, 1, 0, 0, 0, 0, 0, 0}),	
 		BitSet.valueOf(new byte[] {0, 0, 0, 1, 1, 1, 0, 0, 0}),	
 		BitSet.valueOf(new byte[] {0, 0, 0, 0, 0, 0, 1, 1, 1}),	
-		// TODO - include the 5 other configs
+		// TODO - include the 5 other configurations
 	};
 	
 	public static boolean hasWinner(BitSet pieces) {
@@ -43,6 +43,7 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 			circlePieces[i] = new BitSet(9);
 			crossPieces[i] = new BitSet(9);
 		}
+
 		boardsCapturedByCircle = new BitSet(9);
 		boardsCapturedByCross = new BitSet(9);
 	}
@@ -78,10 +79,68 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 		return isCirclesTurn;
 	}
 	
+	private static char printPiece(BitSet circlePieces, BitSet crossPieces, int pos) {
+		if (circlePieces.get(pos)) {
+			return 'o';
+		} else if (crossPieces.get(pos)) {
+			return 'x';
+		} else {
+			return ' ';
+		}
+	}
+	
+	private void printOneRow(StringBuilder sb, int board_switch, int posOffset) {
+		for(int j = 0; j < 9; j++) {
+			if(j % 3 == 0) {
+				board_switch++;
+			}
+			char piece = printPiece(circlePieces[board_switch], crossPieces[board_switch], j % 3 + posOffset);
+			//sb.append(" " + piece + " |")
+			if(j == 8) {
+				sb.append(" " + piece);
+			}else {
+				sb.append(" " + piece + " |");
+			}
+		}
+	}
+	
+
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		
+		sb.append("Current player: " + (this.isCirclesTurn ? "o" : "x") + "\n\n");
+		
+		for(int i = 0; i < 3; i++) {
+			int boardSwitch = 3 * i - 1;
+			printOneRow(sb, boardSwitch, 0);
+			sb.append("\n-----------|-----------|-----------\n");
+			printOneRow(sb, boardSwitch, 3);
+			sb.append("\n-----------|-----------|-----------\n");
+			printOneRow(sb, boardSwitch, 6);
+			if(i == 2) {
+				sb.append('\n');
+			}else {
+				sb.append("\n———————————————————————————————————\n");
+			}
+				
+		}
+		
+		sb.append("\nBoards captured: \n\n");
+		
+		for(int i = 0; i < 9; i++) {
+				char piece = printPiece(boardsCapturedByCircle, boardsCapturedByCross, i);
 
-		sb.append("-----------------------------------------\n" );
+				if(i % 3 == 2) {
+					sb.append(" " + piece);
+					if (i != 8)
+						sb.append("\n———————————\n");
+				} else {
+					sb.append(" " + piece + " |");
+				}
+			
+		}
+		sb.append("\n");
 		
 
 		return sb.toString();
