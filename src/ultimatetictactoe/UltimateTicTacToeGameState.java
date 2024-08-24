@@ -228,7 +228,7 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 			if(i == 2) {
 				sb.append('\n');
 			}else {
-				sb.append("\n===================================\n");
+				sb.append("\n===========+===========+===========\n");
 			}
 				
 		}
