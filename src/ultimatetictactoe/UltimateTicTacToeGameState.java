@@ -1,27 +1,43 @@
 package ultimatetictactoe;
 
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
 import common.GameState;
 
 public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMove> {
-	
+
 	private final BitSet[] circlePieces;
 	private final BitSet[] crossPieces;
 	private final int boardIndexForCurrentMove;
 	private final boolean isCirclesTurn;
-	
+
 	private final BitSet boardsCapturedByCircle;
 	private final BitSet boardsCapturedByCross;
-	
-	private final static BitSet[] WINNING_CONFIGURATIONS = new BitSet[] {
-		BitSet.valueOf(new byte[] {1, 1, 1, 0, 0, 0, 0, 0, 0}),	
-		BitSet.valueOf(new byte[] {0, 0, 0, 1, 1, 1, 0, 0, 0}),	
-		BitSet.valueOf(new byte[] {0, 0, 0, 0, 0, 0, 1, 1, 1}),	
-		// TODO - include the 5 other configurations
+
+	private static BitSet[] WINNING_CONFIGURATIONS = new BitSet[] {
+			initializeBitSet(new boolean[] {true, true, true, false, false, false, false, false, false}),
+			initializeBitSet(new boolean[] {false, false, false, true, true, true, false, false, false}),
+			initializeBitSet(new boolean[] {false, false, false, false, false, false, true, true, true}),
+			initializeBitSet(new boolean[] {true, false, false, true, false, false, true, false, false}),
+			initializeBitSet(new boolean[] {false, true, false, false, true, false, false, true, false}),
+			initializeBitSet(new boolean[] {false, false, true, false, false, true, false, false, true}),
+			initializeBitSet(new boolean[] {true, false, false, false, true, false, false, false, true}),
+			initializeBitSet(new boolean[] {false, false, true, false, true, false, true, false, false})
 	};
-	
+
+	public static BitSet initializeBitSet(boolean[] values) {
+		BitSet result = new BitSet(values.length);
+
+		for (int i = 0; i < values.length; i++) {
+			if (values[i])
+				result.set(i);
+		}
+		return result;
+	}
+
+
 	public static boolean hasWinner(BitSet pieces) {
 		for (BitSet winningConfig : WINNING_CONFIGURATIONS) {
 			BitSet clone = pieces.get(0, pieces.length());
@@ -32,22 +48,21 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 		}
 		return false;
 	}
-	
+
 	public UltimateTicTacToeGameState() {
 		isCirclesTurn = true;
 		boardIndexForCurrentMove = 4;
 		circlePieces = new BitSet[9];
 		crossPieces = new BitSet[9];
-		
+
 		for (int i = 0; i < 9; i++) {
 			circlePieces[i] = new BitSet(9);
 			crossPieces[i] = new BitSet(9);
 		}
-
 		boardsCapturedByCircle = new BitSet(9);
 		boardsCapturedByCross = new BitSet(9);
 	}
-	
+
 	public UltimateTicTacToeGameState(int boardIndexForCurrentMove, 
 			BitSet[] circlePieces,
 			BitSet[] crossPieces, 
@@ -62,16 +77,65 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 		this.boardsCapturedByCross = boardsCapturedByCross;
 	}
 
+	public boolean hasCircleWon() {
+		return hasWinner(boardsCapturedByCircle);
+
+	}
+
+	public boolean hasCrossWon() {
+		return hasWinner(boardsCapturedByCross);
+	}
+
 	@Override
 	public List<UltimateTicTacToeMove> getMoves() {
 		// TODO Auto-generated method stub
-		return null;
+		List<UltimateTicTacToeMove> moves = new ArrayList<>(9);
+		if (!hasCircleWon() && !hasCircleWon()) {
+			for (int i = 0; i<=8; i++) {
+				if (!circlePieces[boardIndexForCurrentMove].get(i) && 
+						!crossPieces[boardIndexForCurrentMove].get(i)) {
+					moves.add(new UltimateTicTacToeMove(boardIndexForCurrentMove, i));
+				}
+			}
+		}
+		return moves;
+
 	}
 
 	@Override
 	public GameState<UltimateTicTacToeMove> makeMove(UltimateTicTacToeMove move) {
 		// TODO Auto-generated method stub
-		return null;
+		BitSet[] circlePieces = new BitSet[9];
+		BitSet[] crossPieces = new BitSet[9];
+		BitSet boardsCapturedByCircle = this.boardsCapturedByCircle.get(0, 9);
+		BitSet boardsCapturedByCross = this.boardsCapturedByCross.get(0, 9);
+		for (int i = 0; i < 9; i++) {
+			circlePieces[i] = this.circlePieces[i].get(0, 9);
+			crossPieces[i] = this.crossPieces[i].get(0, 9);
+		}
+
+		int boardIndexToMove = move.getBoardIndex();
+		int posToMove = move.getPositionOnBoard();
+
+		BitSet boardToMove = isCirclesTurn ? circlePieces[boardIndexToMove] :
+			crossPieces[boardIndexToMove];
+
+		boardToMove.set(posToMove);
+		if (!boardsCapturedByCross.get(boardIndexToMove) && !boardsCapturedByCircle.get(boardIndexToMove) && hasWinner(boardToMove)) {
+			if (isCirclesTurn) {
+				boardsCapturedByCircle.set(boardIndexToMove);
+			} else {
+				boardsCapturedByCross.set(boardIndexToMove);
+			}
+		}
+		return new UltimateTicTacToeGameState(
+				posToMove,
+				circlePieces,
+				crossPieces, 
+				!isCirclesTurn, 
+				boardsCapturedByCircle,
+				boardsCapturedByCross
+				);
 	}
 
 	@Override
@@ -109,7 +173,8 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("Current player: " + (this.isCirclesTurn ? "o" : "x") + "\n\n");
+		sb.append("Current player: " + (this.isCirclesTurn ? "o" : "x") + "\n");
+		sb.append("Current board: " + this.boardIndexForCurrentMove + "\n\n");
 		
 		for(int i = 0; i < 3; i++) {
 			int boardSwitch = 3 * i - 1;
@@ -121,7 +186,7 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 			if(i == 2) {
 				sb.append('\n');
 			}else {
-				sb.append("\n———————————————————————————————————\n");
+				sb.append("\n===================================\n");
 			}
 				
 		}
@@ -134,7 +199,7 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 				if(i % 3 == 2) {
 					sb.append(" " + piece);
 					if (i != 8)
-						sb.append("\n———————————\n");
+						sb.append("\n-----------\n");
 				} else {
 					sb.append(" " + piece + " |");
 				}

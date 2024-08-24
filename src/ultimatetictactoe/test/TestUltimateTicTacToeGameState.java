@@ -1,9 +1,5 @@
 package ultimatetictactoe.test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.BitSet;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -11,9 +7,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import mancala.MancalaGameState;
-import mancala.MancalaMove;
 import ultimatetictactoe.UltimateTicTacToeGameState;
+import ultimatetictactoe.UltimateTicTacToeMove;
 
 class TestUltimateTicTacToeGameState {
 
@@ -36,11 +31,19 @@ class TestUltimateTicTacToeGameState {
 	@Test
 	void test() {
 		UltimateTicTacToeGameState state = new UltimateTicTacToeGameState();
-		
-		Assert.assertEquals(true, UltimateTicTacToeGameState.hasWinner(BitSet.valueOf(new byte[] {1, 1, 1, 0, 0, 0, 0, 0, 0})));
-		Assert.assertEquals(false, UltimateTicTacToeGameState.hasWinner(BitSet.valueOf(new byte[] {1, 0, 1, 0, 0, 0, 0, 0, 0})));
-		
-		System.out.println(state.toString());
+
+		Assert.assertEquals(true, UltimateTicTacToeGameState.hasWinner(UltimateTicTacToeGameState.initializeBitSet(new boolean[] {true, true, true, false, true, false, false, false, false})));
+		Assert.assertEquals(false, UltimateTicTacToeGameState.hasWinner(UltimateTicTacToeGameState.initializeBitSet(new boolean[] {true, false, true, false, true, false, false, false, false})));
+		Assert.assertEquals(true, UltimateTicTacToeGameState.hasWinner(UltimateTicTacToeGameState.initializeBitSet(new boolean[] {true, false, true, false, true, false, true, false, false})));
+
+
+		System.out.println(state);
+
+		state = (UltimateTicTacToeGameState) state.makeMove(new UltimateTicTacToeMove(4,4));
+
+		System.out.println(state);
+		state = (UltimateTicTacToeGameState) state.makeMove(new UltimateTicTacToeMove(4,8));
+		System.out.println(state);
 	}
 
 }

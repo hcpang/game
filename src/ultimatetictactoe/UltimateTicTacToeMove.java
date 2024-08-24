@@ -21,6 +21,8 @@ public class UltimateTicTacToeMove implements Move {
 		return positionOnBoard;
 	}
 	
-	
+	public String toString() {
+		return "(" + boardIndex + "," + positionOnBoard + ")";
+	}
 	
 }
