@@ -2,6 +2,7 @@ package ultimatetictactoe;
 
 import java.io.IOException;
 
+import ultimatetictactoe.evaluation.DaddysUltimateTicTacToeEvaluationV2;
 import ultimatetictactoe.evaluation.SimpleUltimateTicTacToeEvaluation;
 
 public class UltimateTicTacToeMainHumanVsComputer extends UltimateTicTacToeMain {
@@ -21,7 +22,7 @@ public class UltimateTicTacToeMainHumanVsComputer extends UltimateTicTacToeMain 
 	@Override
 	protected UltimateTicTacToeMove getMoveForCross(UltimateTicTacToeGameState state) {
 		return getMachineMove(state,
-				new SimpleUltimateTicTacToeEvaluation(), 10);
+				new DaddysUltimateTicTacToeEvaluationV2(), 10);
 	}
 
 

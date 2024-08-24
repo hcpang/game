@@ -2,6 +2,8 @@ package ultimatetictactoe;
 
 import java.io.IOException;
 
+import ultimatetictactoe.evaluation.DaddysUltimateTicTacToeEvaluation;
+import ultimatetictactoe.evaluation.DaddysUltimateTicTacToeEvaluationV2;
 import ultimatetictactoe.evaluation.EvansUltimateTicTacToeEvaluation;
 import ultimatetictactoe.evaluation.SimpleUltimateTicTacToeEvaluation;
 
@@ -10,10 +12,10 @@ public class UltimateTicTacToeMainComputerVsComputer extends UltimateTicTacToeMa
 
 	@Override
 	protected UltimateTicTacToeMove getMoveForCircle(UltimateTicTacToeGameState state) {
-		
+
 		return getMachineMove(state,
-				new EvansUltimateTicTacToeEvaluation()
-				, 5);
+				new DaddysUltimateTicTacToeEvaluationV2()
+				, 10);
 	}
 
 	@Override

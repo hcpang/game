@@ -45,7 +45,7 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 	
 	private List<UltimateTicTacToeMove> cachedMoves;
 
-	private static BitSet[] WINNING_CONFIGURATIONS = new BitSet[] {
+	public static BitSet[] WINNING_CONFIGURATIONS = new BitSet[] {
 			initializeBitSet(new boolean[] {true, true, true, false, false, false, false, false, false}),
 			initializeBitSet(new boolean[] {false, false, false, true, true, true, false, false, false}),
 			initializeBitSet(new boolean[] {false, false, false, false, false, false, true, true, true}),
