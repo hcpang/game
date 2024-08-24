@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import cb.alphabeta.AlphaBeta;
+import common.Evaluation;
+import common.Game;
+
 public class UltimateTicTacToeMain {
 
 	private final BufferedReader br;
@@ -41,8 +45,13 @@ public class UltimateTicTacToeMain {
 			System.out.println();
 			state = (UltimateTicTacToeGameState) state.makeMove(bestMove);
 		}
-
-		System.out.println("Winner is " + (state.hasCircleWon() ? "o" : "x") + "!!");
+		if (state.hasCircleWon()) {
+			System.out.println("Winner is o!!");
+		} else if (state.hasCrossWon()) {
+			System.out.println("Winner is x!!");
+		} else {
+			System.out.println("It's a draw!");
+		}
 
 
 	}
@@ -96,7 +105,11 @@ public class UltimateTicTacToeMain {
 	}
 
 
-
+	protected UltimateTicTacToeMove getMachineMove(UltimateTicTacToeGameState state,
+			Evaluation<UltimateTicTacToeGameState> eval, int depth) {
+		AlphaBeta ab = new AlphaBeta(new Game<>(state, eval));
+		return (UltimateTicTacToeMove) ab.analyzeDepth(depth);
+	}
 
 	public static void main(String[] args) {
 

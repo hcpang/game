@@ -8,6 +8,27 @@ import common.GameState;
 
 public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMove> {
 
+	public BitSet[] getCirclePieces() {
+		return circlePieces;
+	}
+
+
+	public BitSet[] getCrossPieces() {
+		return crossPieces;
+	}
+
+
+	public BitSet getBoardsCapturedByCircle() {
+		return boardsCapturedByCircle;
+	}
+
+
+	public BitSet getBoardsCapturedByCross() {
+		return boardsCapturedByCross;
+	}
+
+
+
 	private final BitSet[] circlePieces;
 	private final BitSet[] crossPieces;
 	private final int boardIndexForCurrentMove;
@@ -21,6 +42,8 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 
 	private final BitSet boardsCapturedByCircle;
 	private final BitSet boardsCapturedByCross;
+	
+	private List<UltimateTicTacToeMove> cachedMoves;
 
 	private static BitSet[] WINNING_CONFIGURATIONS = new BitSet[] {
 			initializeBitSet(new boolean[] {true, true, true, false, false, false, false, false, false}),
@@ -94,17 +117,18 @@ public class UltimateTicTacToeGameState implements GameState<UltimateTicTacToeMo
 
 	@Override
 	public List<UltimateTicTacToeMove> getMoves() {
-		// TODO Auto-generated method stub
-		List<UltimateTicTacToeMove> moves = new ArrayList<>(9);
-		if (!hasCircleWon() && !hasCrossWon()) {
-			for (int i = 0; i<=8; i++) {
-				if (!circlePieces[boardIndexForCurrentMove].get(i) && 
-						!crossPieces[boardIndexForCurrentMove].get(i)) {
-					moves.add(new UltimateTicTacToeMove(boardIndexForCurrentMove, i));
+		if (cachedMoves == null) {
+			cachedMoves = new ArrayList<>(9);
+			if (!hasCircleWon() && !hasCrossWon()) {
+				for (int i = 0; i<=8; i++) {
+					if (!circlePieces[boardIndexForCurrentMove].get(i) && 
+							!crossPieces[boardIndexForCurrentMove].get(i)) {
+						cachedMoves.add(new UltimateTicTacToeMove(boardIndexForCurrentMove, i));
+					}
 				}
 			}
 		}
-		return moves;
+		return cachedMoves;
 
 	}
 
