@@ -4,7 +4,7 @@ import java.util.BitSet;
 
 import ultimatetictactoe.UltimateTicTacToeGameState;
 
-public class AlexEvaluation extends AbstractUltimateTicTacToeEvaluation {
+public class EvansUltimateTicTacToeEvaluationV3 extends AbstractUltimateTicTacToeEvaluation {
 
 
 	
@@ -21,42 +21,21 @@ public class AlexEvaluation extends AbstractUltimateTicTacToeEvaluation {
 				int circlePieces = BitSetUtils.getPotentialCaptureMoves(state.getCirclePieces()[i], state.getCrossPieces()[i]).cardinality();
 				int crossPieces = BitSetUtils.getPotentialCaptureMoves(state.getCrossPieces()[i], state.getCirclePieces()[i]).cardinality();
 				if (circlePieces > crossPieces) {
-					circleScore+=5;
+					circleScore+=1;
 				} else if (crossPieces > circlePieces) {
-					crossScore += 5;
+					crossScore += 1;
 				}
 			}
 		}
-		
-		int advantageScore;
-		if(state.isCirclesTurn()) {
-			advantageScore =  1 * circleScore - 2 * crossScore;
-		}else {
-			advantageScore = 2 * circleScore - 1 * crossScore;
-		}
-		
-		int circleBoardAdv = BitSetUtils.getPotentialCaptureMoves(state.getBoardsCapturedByCircle(), state.getBoardsCapturedByCross()).cardinality();
-		int crossBoardAdv = BitSetUtils.getPotentialCaptureMoves(state.getBoardsCapturedByCross(), state.getBoardsCapturedByCircle()).cardinality();
-		
-		int boardAdvantageScore;
-		if(state.isCirclesTurn()) {
-			boardAdvantageScore = circleBoardAdv -  2 * crossBoardAdv;
-		}else {
-			boardAdvantageScore = 2 * circleBoardAdv -  crossBoardAdv;
-		}
-		
-		int boardCenterScore = state.getBoardsCapturedByCircle().get(4) ? 1 : 
-			(state.getBoardsCapturedByCross().get(4) ? -1 : 0);
-		/*int boardCaptureDiffScore = state.getBoardsCapturedByCircle().cardinality() - 
-				state.getBoardsCapturedByCross().cardinality();*/
+		int advantageScore = circleScore - crossScore;
 		
 		BitSet circleAdvantageBoard = BitSetUtils.getPotentialCaptureMoves(state.getBoardsCapturedByCircle(), state.getBoardsCapturedByCross());
 		BitSet crossAdvantageBoard = BitSetUtils.getPotentialCaptureMoves(state.getBoardsCapturedByCross(), state.getBoardsCapturedByCircle());
 		
-//		int circleBoardAdv = circleAdvantageBoard.cardinality();
-//		int crossBoardAdv = crossAdvantageBoard.cardinality();
-//		
-//		int boardAdvantageScore = circleBoardAdv - crossBoardAdv;
+		int circleBoardAdv = circleAdvantageBoard.cardinality();
+		int crossBoardAdv = crossAdvantageBoard.cardinality();
+		
+		int boardAdvantageScore = circleBoardAdv - crossBoardAdv;
 		
 		int circleExtremeAdvantageScore = 0;
 		int crossExtremeAdvantageScore = 0;
@@ -83,11 +62,14 @@ public class AlexEvaluation extends AbstractUltimateTicTacToeEvaluation {
 		
 		int ExtremeAdvantageScore = circleExtremeAdvantageScore - crossExtremeAdvantageScore;
 		
-		return boardAdvantageScore * 200 
-				+ boardCenterScore * 2
+		int boardCenterScore = state.getBoardsCapturedByCircle().get(4) ? 1 : 
+			(state.getBoardsCapturedByCross().get(4) ? -1 : 0);
+//		int boardCaptureDiffScore = state.getBoardsCapturedByCircle().cardinality() - 
+//				state.getBoardsCapturedByCross().cardinality();
+		
+		return boardAdvantageScore * 200 + boardCenterScore * 10
 			//	+ boardCaptureDiffScore * 2
-				+ advantageScore * 2
-				+ ExtremeAdvantageScore;
+				+ advantageScore + 2000 * ExtremeAdvantageScore;
 
 	}
 
