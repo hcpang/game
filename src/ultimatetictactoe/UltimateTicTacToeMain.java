@@ -12,22 +12,29 @@ import common.Game;
 public class UltimateTicTacToeMain {
 
 	private final BufferedReader br;
+	
+	public enum MatchResult {CIRCLE_WIN, CROSS_WIN, DRAW};
 
 	public UltimateTicTacToeMain() {
 		InputStreamReader isr = new InputStreamReader(System.in);
 		br = new BufferedReader(isr);
 	}
 
-	public void playGame() {
-		playGame(new UltimateTicTacToeGameState());
+	public MatchResult playGame() {
+		return playGame(true);
+	}
+	
+	public MatchResult playGame(boolean printBoards) {
+		return playGame(new UltimateTicTacToeGameState(), printBoards);
 	}
 
-	public void playGame(UltimateTicTacToeGameState state) {
+	public MatchResult playGame(UltimateTicTacToeGameState state, boolean printBoards) {
 
 		while(true) {
 
-
-			System.out.println(state);
+			if (printBoards) {
+				System.out.println(state);
+			}
 
 			if (state.getMoves().isEmpty()) {
 				break;
@@ -40,18 +47,28 @@ public class UltimateTicTacToeMain {
 			} else {
 				bestMove = getMoveForCross(state);
 			}
-
-			System.out.println(state.getCurrentPlayer() +  " making move for: " + bestMove);
-			System.out.println();
+			if (printBoards) {
+				System.out.println(state.getCurrentPlayer() +  " making move for: " + bestMove);
+				System.out.println();
+			}
 			state = (UltimateTicTacToeGameState) state.makeMove(bestMove);
 		}
+		MatchResult result;
 		if (state.hasCircleWon()) {
-			System.out.println("Winner is o!!");
+			if (printBoards)
+				System.out.println("Winner is o!!");
+			result = MatchResult.CIRCLE_WIN;
 		} else if (state.hasCrossWon()) {
-			System.out.println("Winner is x!!");
+			if (printBoards)
+				System.out.println("Winner is x!!");
+			result = MatchResult.CROSS_WIN;
 		} else {
-			System.out.println("It's a draw!");
+			if (printBoards)
+				System.out.println("It's a draw!");
+			result = MatchResult.DRAW;
 		}
+		
+		return result;
 
 
 	}

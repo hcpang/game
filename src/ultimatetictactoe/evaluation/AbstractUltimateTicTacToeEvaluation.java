@@ -7,12 +7,14 @@ public abstract class AbstractUltimateTicTacToeEvaluation implements Evaluation<
 
 	protected abstract int evaluateNonTerminalState(UltimateTicTacToeGameState state);
 
+	private final int MAX_SCORE = 999999999;
+	
 	@Override
 	public int evaluate(UltimateTicTacToeGameState state) {
 		if (state.hasCircleWon()) {
-			return 999999;
+			return MAX_SCORE;
 		} else if (state.hasCrossWon()) {
-			return -999999;
+			return -MAX_SCORE;
 		} else if (state.getMoves().isEmpty()){ 
 			return 0;
 		} else {

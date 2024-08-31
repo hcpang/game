@@ -78,9 +78,9 @@ public class GenericEvaluation extends AbstractUltimateTicTacToeEvaluation {
 //		}
 		
 		if (state.isCirclesTurn()) {
-			return 100 * circleScore - weights.getDefenseWeight() * crossScore;
+			return weights.getOffenseWeight() * circleScore - weights.getDefenseWeight() * crossScore;
 		} else {
-			return weights.getDefenseWeight() * circleScore - 100 * crossScore;
+			return weights.getDefenseWeight() * circleScore - weights.getOffenseWeight() * crossScore;
 		}
 	}
 
