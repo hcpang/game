@@ -59,12 +59,26 @@ To use: Create a `Game` wrapper around your GameState and Evaluation, then call 
 ### Ultimate Tic-Tac-Toe Implementation
 
 - **UltimateTicTacToeGameState**: Uses BitSet arrays (length 9) to efficiently represent:
-  - `circlePieces[i]`: Circle positions on board i
+  - `circlePieces[i]`: Circle positions on board i (positions 0-8 in 3x3 grid)
   - `crossPieces[i]`: Cross positions on board i
   - `boardsCapturedByCircle/Cross`: Which of the 9 boards each player has won
   - `boardIndexForCurrentMove`: Which board the current move must be played on
+  - Board indices 0-8 arranged as: [0,1,2 / 3,4,5 / 6,7,8] (top-left to bottom-right)
 
-- **UltimateTicTacToeMove**: Stores board index and position within that board
+- **UltimateTicTacToeMove**: Stores board index (0-8) and position within that board (0-8)
+
+- **UltimateTicTacToeMain**: Console-based game implementation
+
+- **UltimateTicTacToeMainGUI**: GUI implementation using Java Swing
+  - Extends UltimateTicTacToeMain and overrides `getMoveForCircle()` for click input
+  - Displays 3x3 grid of boards, each containing 3x3 cells
+  - Visual feedback:
+    - Active board highlighted in green
+    - Valid cells highlighted in light yellow
+    - Circle-captured boards shown in light blue with blue border
+    - Cross-captured boards shown in light pink with red border
+  - Shows board numbers and current game status
+  - Thread-safe synchronization between GUI and game logic threads
 
 - **Evaluation implementations**:
   - `GenericEvaluation`: Parameterized by `GenericEvaluationWeights` - used by genetic algorithm
@@ -147,12 +161,18 @@ java -cp "bin;lib/AlphaBetaLib_v0.2.jar" mancala.MancalaMain
 java -cp "bin;lib/AlphaBetaLib_v0.2.jar" mancala.MancalaMainComputerVsComputer
 ```
 
-**Ultimate Tic-Tac-Toe (Human vs Human)**:
+**Ultimate Tic-Tac-Toe (Human vs Computer - GUI)**:
+```bash
+java -cp "bin;lib/AlphaBetaLib_v0.2.jar" ultimatetictactoe.UltimateTicTacToeMainGUI
+```
+This launches a graphical interface with a 3x3 grid of tic-tac-toe boards. Click cells to make moves. The active board is highlighted in green. You play as Circle (O), computer plays as Cross (X).
+
+**Ultimate Tic-Tac-Toe (Human vs Human - Console)**:
 ```bash
 java -cp "bin;lib/AlphaBetaLib_v0.2.jar" ultimatetictactoe.UltimateTicTacToeMain
 ```
 
-**Ultimate Tic-Tac-Toe (Human vs Computer)**:
+**Ultimate Tic-Tac-Toe (Human vs Computer - Console)**:
 ```bash
 java -cp "bin;lib/AlphaBetaLib_v0.2.jar" ultimatetictactoe.UltimateTicTacToeMainHumanVsComputer
 ```
